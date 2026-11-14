@@ -209,6 +209,7 @@ textarea:focus{outline:2px solid var(--gold);border-color:transparent}
     <span class="heart" aria-hidden="true">💗</span>
     <h2>C’est noté !</h2>
     <div class="recap" id="recap"></div>
+    <p id="tries" style="font-family:var(--serif);font-style:italic;font-size:1.25rem;color:var(--ink)"></p>
     <a class="btn" id="wa" href="#" style="display:inline-block;text-decoration:none">M’envoyer ma réponse sur WhatsApp</a>
     <p class="small">Un dernier clic et je saurai tout. J’ai hâte !</p>
     <div class="sign">Avec tendresse</div>
@@ -311,10 +312,15 @@ textarea:focus{outline:2px solid var(--gold);border-color:transparent}
     recap.append("Rendez-vous ", Object.assign(document.createElement("b"), {textContent: answers.day}),
       " à ", Object.assign(document.createElement("b"), {textContent: answers.time}),
       " pour ", Object.assign(document.createElement("b"), {textContent: answers.act}), ".");
+    var tries = dodges === 0
+      ? { page: "Tu as dit oui tout de suite, sans hésiter 💗", wa: "J’ai dit oui tout de suite, sans hésiter 💗" }
+      : { page: "Tu as essayé de dire non " + dodges + " fois avant de dire oui 😏💗", wa: "J’ai essayé de dire non " + dodges + " fois avant de dire oui 😅💗" };
+    document.getElementById("tries").textContent = tries.page;
     var msg = "Coucou, c’est Séphora 💗 J’ai dit OUI !\n"
       + "Jour : " + answers.day + "\n"
       + "Heure : " + answers.time + "\n"
       + "Sortie : " + answers.act
+      + "\n" + tries.wa
       + (note ? "\nMon petit mot : " + note : "");
     var base = WHATSAPP_NUMBER ? "https://wa.me/" + WHATSAPP_NUMBER : "https://wa.me/";
     document.getElementById("wa").href = base + "?text=" + encodeURIComponent(msg);
